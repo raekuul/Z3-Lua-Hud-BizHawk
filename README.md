@@ -1,4 +1,4 @@
-# Z3-Rando-Hud-BizHawk
+# Z3-Lua-Hud-BizHawk
 
 Designed for use with BizHawk (using the BSNES core - the Snes9x core doesn't support memory hooks yet).  
 Could possibly be adapted for use with Snes9x, but requires memory hooks to be implemented.  
