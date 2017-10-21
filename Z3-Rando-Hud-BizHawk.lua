@@ -37,10 +37,7 @@ function drawArray(array)
 end
 
 function setMUFlag()
-	menuWasOpened = true
 end
-
-event.onmemorywrite(setMUFlag, 0x200,"menuOpened")
 
 function updatePendants()
 	p = {values={[0] = 0, 0, 0},paths={[0]=res.."pendant1.png",res.."pendant2.png",res.."pendant4.png"}}
@@ -110,8 +107,9 @@ end
 while true do
 	emu.frameadvance()
 	gui.text(0,1,warning)
-		
-	if (menuWasOpened == true) then
+
+	q = joypad.get(1)
+	if (q.Start == true) then
 		updateItemGrid()
 	end
 end

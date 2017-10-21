@@ -9,7 +9,7 @@ moneyLow = {address=0xF360}
 moneyHi = {address=0xF361}
 
 maxLife = {address=0xF36C}
-heartPiece = {address=0xF36B, row=4, col=0, [0]=res .. "hp0.png", res .. "hp1.png", res .. "hp2.png", res .. "hp+3.png"}
+heartPiece = {address=0xF36B, row=4, col=0, [0]=res .. "hp0.png", res .. "hp1.png", res .. "hp2.png", res .. "hp3.png"}
 
 quiver = {address=0xF371, row=5, col=4, [0] = res .. blank}
 bomb_bag = {address=0xF370, row=0, col=3, [0] = res .. blank}
