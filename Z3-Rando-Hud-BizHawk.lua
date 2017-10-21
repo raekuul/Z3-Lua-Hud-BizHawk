@@ -4,7 +4,7 @@ require 'Z3-Rando-Hud-Addresses'
 
 console.clear()
 print("Script initialized.")
-warning = "This run is not SRL Legal!"
+warning = "Remember, Autohuds are banned in races!"
 
 res = [[.\res\]]
 blank = [[blank.png]]
@@ -13,7 +13,7 @@ memory.usememorydomain("WRAM")
 
 menuWasOpened = false
 
-drawSpace = gui.createcanvas(224,224)
+drawSpace = gui.createcanvas(256,224)
 drawSpace.Clear(0xff000000)
 client.SetClientExtraPadding(0,20,0,20)
 
@@ -40,25 +40,27 @@ function setMUFlag()
 end
 
 function updatePendants()
-	p = {values={[0] = 0, 0, 0},paths={[0]=res.."pendant1.png",res.."pendant2.png",res.."pendant4.png"}}
+	p = {values={[0] = 0, 0, 0},paths={[0]=res.."pendantR.png",res.."pendantB.png",res.."pendantG.png"}}
 	for r=0,2,1 do
 		p.values[r] = bit.check(memory.read_u8(pendants.address),r)
 		if p.values[r] == false then
-			drawSpace.DrawImage(res .. "pendant0.png",32*pendants.col,32*(pendants.row + r))
+			drawSpace.DrawImage(res .. "pendantX.png",32*pendants.col,32*(pendants.poss[r] - 1))
 		else
-			drawSpace.DrawImage(p.paths[r],32*pendants.col,32*(pendants.row + r))
+			drawSpace.DrawImage(p.paths[r],32*pendants.col,32*(pendants.poss[r] - 1))
 		end
 	end
 end
 
 function updateCrystals()
-	p = {values={[0] = 0, 0, 0, 0, 0, 0, 0}}
-	for r=0,6,1 do
-		p.values[r] = bit.check(memory.read_u8(crystals.address),r)
+	p = {values={[0] = 0, 0, 0, 0, 0, 0, 0, 0}}
+	j = memory.read_u8(crystals.address)
+	
+	for r=0,7,1 do
+		p.values[r] = bit.check(j,r)
 		if p.values[r] == false then
-			drawSpace.DrawImage(res .. "crystal0.png",32*crystals.col,32*(crystals.row + r))
+			drawSpace.DrawImage(res .. "crystalX.png",32*crystals.col,32*(crystals.poss[r] - 1))
 		else
-			drawSpace.DrawImage(res .. "crystal"..r..".png",32*crystals.col,32*(crystals.row + r))
+			drawSpace.DrawImage(res .. "crystal"..crystals.poss[r]..".png",32*crystals.col,32*(crystals.poss[r] - 1))
 		end
 	end
 end

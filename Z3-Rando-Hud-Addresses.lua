@@ -15,8 +15,13 @@ quiver = {address=0xF371, row=5, col=4, [0] = res .. blank}
 bomb_bag = {address=0xF370, row=0, col=3, [0] = res .. blank}
 bottle = {address=0xF35C, row=6, col=0, [0] = res .. blank}
 
-pendants = {address=0xF374, row=0, col=5}
-crystals = {address=0xF37A, row=0, col=6}
+pendants = {address=0xF374, row=0, col=5, poss={[0]=3,2,1,0,0,0,0,0}}
+crystals = {address=0xF37A, row=0, col=6, poss={[0]=6,1,5,7,2,4,3,0}}
+
+lwbosses = {address={[0]=0x0,0x0,0x0}, row=4, col=5, poss=4}
+dwbosses = {address={[0]=0x0,0x0,0x0,0x0,0x0,0x0,0x0}, row=0, col=7, poss={[0]=0,1,2,3,4,5,6,7}}
+
+aga_state = {address={[0]0xf041, 0xf01b} row=3, col=0, poss={[0]=3,3}, img={[0]=[[.\bosses\Aga0.png]],[[.\bosses\Aga1.png]],[[.\bosses\Aga2.png]],[[.\bosses\Aga3.png]]}}
 
 
 -- Y ITEMS ARRAY
@@ -32,7 +37,7 @@ ItemsArray = {
 	quake = {address=0xF349, row=1, col=4,[0] = res .. blank, res .. "quake.png"},
 	lamp = {address=0xF34A, row=2, col=0,[0] = res .. blank, res .. "lamp.png"},
 	hammer = {address=0xF34B,row=2, col=1, [0] = res .. blank, res .. "hammer.png"},
-	shovel = {address=0xF34C,row=2, col=2, [0] = res .. blank, res .. "shovel.png", res .. "flute.png", res .. "flute.png"},
+	shovel = {address=0xF34C,row=2, col=2, [0] = res .. blank, res .. "shovel.png", res .. "flute1.png", res .. "flute2.png"},
 	net = {address=0xF34D,row=2, col=3, [0] = res .. blank, res .. "net.png"},
 	book = {address=0xF34E,row=2, col=4, [0] = res .. blank, res .. "book.png"},
 	somaria = {address=0xF350,row=3, col=1, [0] = res .. blank, res .. "somaria.png"},
