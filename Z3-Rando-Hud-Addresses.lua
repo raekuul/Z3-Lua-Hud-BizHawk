@@ -21,7 +21,7 @@ crystals = {address=0xF37A, row=0, col=6, poss={[0]=6,1,5,7,2,4,3,0}}
 lwbosses = {address={[0]=0x0,0x0,0x0}, row=4, col=5, poss=4}
 dwbosses = {address={[0]=0x0,0x0,0x0,0x0,0x0,0x0,0x0}, row=0, col=7, poss={[0]=0,1,2,3,4,5,6,7}}
 
-aga_state = {address={[0]=0xf041, 0xf01b} row=3, col=0, poss={[0]=3,3}, img={[0]=[[.\bosses\Aga0.png]],[[.\bosses\Aga1.png]],[[.\bosses\Aga2.png]],[[.\bosses\Aga3.png]]}}
+aga_state = {address={[0]=0xf041, 0xf01b}, row=3, col=0, poss={[0]=3,3}, img={[0]=[[.\bosses\Aga0.png]],[[.\bosses\Aga1.png]],[[.\bosses\Aga2.png]],[[.\bosses\Aga3.png]]}}
 
 
 -- Y ITEMS ARRAY
