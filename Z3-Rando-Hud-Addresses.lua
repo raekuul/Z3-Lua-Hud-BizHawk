@@ -1,14 +1,11 @@
 -- Z3-Rando-Hud-Addresses
 -- Accurate as of vt26
 -- Addresses are from WRAM
+-- WRAM addresses start at System Bus 0x7F0000
 
 res = [[.\res\]]
 blank = [[blank.png]]
 
-moneyLow = {address=0xF360}
-moneyHi = {address=0xF361}
-
-maxLife = {address=0xF36C}
 heartPiece = {address=0xF36B, row=4, col=0, [0]=res .. "hp0.png", res .. "hp1.png", res .. "hp2.png", res .. "hp3.png"}
 
 quiver = {address=0xF371, row=5, col=4, [0] = res .. blank}
@@ -18,10 +15,13 @@ bottle = {address=0xF35C, row=6, col=0, [0] = res .. blank}
 pendants = {address=0xF374, row=0, col=5, poss={[0]=3,2,1,0,0,0,0,0}}
 crystals = {address=0xF37A, row=0, col=6, poss={[0]=6,1,5,7,2,4,3,0}}
 
-lwbosses = {address={[0]=0x0,0x0,0x0}, row=4, col=5, poss=4}
-dwbosses = {address={[0]=0x0,0x0,0x0,0x0,0x0,0x0,0x0}, row=0, col=7, poss={[0]=0,1,2,3,4,5,6,7}}
+lwbosses = {offsets={[0]=0xC8,0x33,0x07}, row=4, col=5, poss={[0]=0,1,2}, img={[0]="EP","DP","ToH"}}
+dwbosses = {offsets={[0]=0x5A,0x06,0x29,0xAC,0xDE,0x90,0xA4}, row=0, col=7, poss={[0]=0,1,2,3,4,5,6}, img={[0]="PoD","SP","SW","TT","IP","MM","TR"}}
 
-aga_state = {address={[0]=0xf041, 0xf01b}, row=3, col=0, poss={[0]=3,3}, img={[0]=[[.\bosses\Aga0.png]],[[.\bosses\Aga1.png]],[[.\bosses\Aga2.png]],[[.\bosses\Aga3.png]]}}
+boss_root_addr = 0xF001
+boss_checkBit = 3
+
+aga_state = {address={[0]=0xf041, 0xf01b}, row=3, col=0}
 
 
 -- Y ITEMS ARRAY

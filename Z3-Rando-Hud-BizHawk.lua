@@ -94,6 +94,56 @@ function updateBombBag()
 	drawSpace.DrawImage(path,32*bomb_bag.col,32*bomb_bag.row)
 end
 
+function updateLWBs()
+	p={values={[0] = 0, 0, 0}}
+	for i=0,2,1 do
+		j = boss_root_addr + (lwbosses.offsets[i] * 2)
+		p.values[i] = bit.check(memory.read_u8(j),boss_checkBit)
+		if p.values[i] == false then
+			drawSpace.DrawImage([[.\bosses\alive\]] .. lwbosses.img[i] .. ".png",32*lwbosses.col,32*(lwbosses.row + i))
+		else
+			drawSpace.DrawImage([[.\bosses\dead\]] .. lwbosses.img[i] .. ".png",32*lwbosses.col,32*(lwbosses.row + i))
+		end
+	end
+end
+
+function updateDWBs()
+	p = {values={[0] = 0, 0, 0, 0, 0, 0, 0}}
+	for i=0,6,1 do
+		j = boss_root_addr + (dwbosses.offsets[i] * 2)
+		p.values[i] = bit.check(memory.read_u8(j),boss_checkBit)
+		if p.values[i] == false then
+			drawSpace.DrawImage([[.\bosses\alive\]] .. dwbosses.img[i] .. ".png",32*dwbosses.col,32*(dwbosses.row+i))
+		else
+			drawSpace.DrawImage([[.\bosses\dead\]] .. dwbosses.img[i] .. ".png",32*dwbosses.col,32*(dwbosses.row+i))
+		end
+	end
+end
+
+function updateAgaState()
+	aga1 = memory.read_u8(aga_state.address[0])
+	aga2 = memory.read_u8(aga_state.address[1])
+	if bit.check(aga1,3) == true then
+		if bit.check(aga2,3) == true then
+			drawSpace.DrawImage([[.\bosses\Aga3.png]], 32*aga_state.col, 32*aga_state.row)
+		else
+			drawSpace.DrawImage([[.\bosses\Aga1.png]], 32*aga_state.col, 32*aga_state.row)
+		end
+	else
+		if bit.check(aga2,3) == true then
+			drawSpace.DrawImage([[.\bosses\Aga2.png]], 32*aga_state.col, 32*aga_state.row)
+		else
+			drawSpace.DrawImage([[.\bosses\Aga0.png]], 32*aga_state.col, 32*aga_state.row)
+		end
+	end
+end
+
+function updateBosses()
+	updateLWBs()
+	updateDWBs()
+	updateAgaState()
+end
+
 function updateItemGrid()
 	drawArray(ItemsArray)
 	updateCrystals()
@@ -102,6 +152,7 @@ function updateItemGrid()
 	updateBombBag()
 	updateBottles()
 	updatePendants()
+	updateBosses()
 	menuWasOpened = false
 	drawSpace.Refresh()
 end
