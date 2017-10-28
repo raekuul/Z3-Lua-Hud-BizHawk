@@ -15,14 +15,32 @@ bottle = {address=0xF35C, row=6, col=0, [0] = res .. blank}
 pendants = {address=0xF374, row=0, col=5, poss={[0]=3,2,1,0,0,0,0,0}}
 crystals = {address=0xF37A, row=0, col=6, poss={[0]=6,1,5,7,2,4,3,0}}
 
-lwbosses = {offsets={[0]=0xC8,0x33,0x07}, row=4, col=5, poss={[0]=0,1,2}, img={[0]="EP","DP","ToH"}}
-dwbosses = {offsets={[0]=0x5A,0x06,0x29,0xAC,0xDE,0x90,0xA4}, row=0, col=7, poss={[0]=0,1,2,3,4,5,6}, img={[0]="PoD","SP","SW","TT","IP","MM","TR"}}
+lwbosses = {offsets={[0]=0xC8,0x33,0x07}, row=4, col=5, poss={[0]=0,1,2}, img={[0]="EP","DP","ToH"}, keyDex={[0]=2,3,10}}
+dwbosses = {offsets={[0]=0x5A,0x06,0x29,0xAC,0xDE,0x90,0xA4}, row=0, col=7, poss={[0]=0,1,2,3,4,5,6}, img={[0]="PoD","SP","SW","TT","IP","MM","TR"}, keyDex={[0]=6,5,8,11,9,7,12}}
 
 boss_root_addr = 0xF001
 boss_checkBit = 3
 
-aga_state = {address={[0]=0xf041, 0xf01b}, row=3, col=0}
+aga_state = {address={[0]=0xf041, 0xf01b}, row=3, col=0, keyDex={[0]=4,13}}
 
+keys = {
+	  [0] = 0xf37C, --  0 Sewer Passage
+			0xf37D, --  1 Hyrule Castle
+			0xf37E, --  2 Eastern Palace
+			0xf37F, --  3 Desert Palace
+			0xf380, --  4 Castle Tower
+			0xf381, --  5 Swamp Palace
+			0xF382, --  6 Dark Palace
+			0xF383, --  7 Misery Mire
+			0xF384, --  8 Skull Woods
+			0xF385, --  9 Ice Palace
+			0xF386, -- 10 Tower of Hera
+			0xF387, -- 11 Gargoyle's Domain
+			0xF388, -- 12 Turtle Rock
+			0xf389, -- 13 Ganon's Tower
+			0xf38A, -- 14 unused A
+			0xf38B  -- 15 unused B
+}
 
 -- Y ITEMS ARRAY
 ItemsArray = {

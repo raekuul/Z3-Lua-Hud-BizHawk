@@ -1,5 +1,5 @@
 -- Z3-Rando-Hud-BizHawk.lua - BizHawk Version
--- Version 1 "Armos Knight"
+-- Version 2 "Lanmola"
 require 'Z3-Rando-Hud-Addresses'
 
 console.clear()
@@ -99,11 +99,13 @@ function updateLWBs()
 	for i=0,2,1 do
 		j = boss_root_addr + (lwbosses.offsets[i] * 2)
 		p.values[i] = bit.check(memory.read_u8(j),boss_checkBit)
+		q = memory.read_u8(keys[lwbosses.keyDex[i]])
 		if p.values[i] == false then
 			drawSpace.DrawImage([[.\bosses\alive\]] .. lwbosses.img[i] .. ".png",32*lwbosses.col,32*(lwbosses.row + i))
 		else
 			drawSpace.DrawImage([[.\bosses\dead\]] .. lwbosses.img[i] .. ".png",32*lwbosses.col,32*(lwbosses.row + i))
 		end
+		drawSpace.DrawImage([[.\hud\]] .. q ..".png",32*lwbosses.col+16,32*(lwbosses.row + i)+16)
 	end
 end
 
@@ -112,17 +114,22 @@ function updateDWBs()
 	for i=0,6,1 do
 		j = boss_root_addr + (dwbosses.offsets[i] * 2)
 		p.values[i] = bit.check(memory.read_u8(j),boss_checkBit)
+		q = memory.read_u8(keys[dwbosses.keyDex[i]])
 		if p.values[i] == false then
 			drawSpace.DrawImage([[.\bosses\alive\]] .. dwbosses.img[i] .. ".png",32*dwbosses.col,32*(dwbosses.row+i))
 		else
 			drawSpace.DrawImage([[.\bosses\dead\]] .. dwbosses.img[i] .. ".png",32*dwbosses.col,32*(dwbosses.row+i))
 		end
+		drawSpace.DrawImage([[.\hud\]] .. q ..".png",32*dwbosses.col+16,32*(dwbosses.row + i)+16)
 	end
 end
 
 function updateAgaState()
 	aga1 = memory.read_u8(aga_state.address[0])
 	aga2 = memory.read_u8(aga_state.address[1])
+	
+	q = memory.read_u8(keys[aga_state.keyDex[0]])
+	r = memory.read_u8(keys[aga_state.keyDex[1]])
 	if bit.check(aga1,3) == true then
 		if bit.check(aga2,3) == true then
 			drawSpace.DrawImage([[.\bosses\Aga3.png]], 32*aga_state.col, 32*aga_state.row)
@@ -136,12 +143,26 @@ function updateAgaState()
 			drawSpace.DrawImage([[.\bosses\Aga0.png]], 32*aga_state.col, 32*aga_state.row)
 		end
 	end
+	drawSpace.DrawImage([[.\hud\]] .. q ..".png",32*aga_state.col,32*(aga_state.row))
+	drawSpace.DrawImage([[.\hud\]] .. r ..".png",(32*aga_state.col)+16,32*(aga_state.row)+16)
+end
+
+function updateEscape()
+	q = memory.read_u8(keys[0]) + memory.read_u8(keys[1])
+	r = memory.read_u8(0xF3C6)
+	if bit.check(r,2) == true then
+		drawSpace.DrawImage([[.\bosses\Zelda.png]],(32*5),(32*3))
+	else
+		drawSpace.DrawImage([[.\bosses\Zelda_Grey.png]],(32*5),(32*3))
+	end
+	drawSpace.DrawImage([[.\hud\]] .. q ..".png",(32*5)+16,(32*3)+16)
 end
 
 function updateBosses()
 	updateLWBs()
 	updateDWBs()
 	updateAgaState()
+	updateEscape()
 end
 
 function updateItemGrid()

@@ -3,7 +3,7 @@
 require 'Z3-Rando-Hud-Addresses'
 
 function memory.read_u8(target)
-	return memory.readbyte(target + 0x7F0000)
+	return memory.readbyte(target + 0x7E0000)
 end
 
 console.clear()
@@ -103,6 +103,7 @@ function updateLWBs()
 	for i=0,2,1 do
 		j = boss_root_addr + (lwbosses.offsets[i] * 2)
 		p.values[i] = bit.check(memory.read_u8(j),boss_checkBit)
+		
 		if p.values[i] == false then
 			drawSpace.DrawImage([[.\bosses\alive\]] .. lwbosses.img[i] .. ".png",32*lwbosses.col,32*(lwbosses.row + i))
 		else
