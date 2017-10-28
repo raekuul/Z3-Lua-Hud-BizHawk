@@ -2,20 +2,30 @@
 -- Version 2 "Lanmola"
 require 'Z3-Rando-Hud-Addresses'
 
-console.clear()
-print("Script initialized.")
-warning = "Remember, Autohuds are banned in races!"
+function race()
+	q = memory.read_u8(0x00FFC3, "System Bus")
+	if (q == 0x54) then
+		return true
+	else
+		return false
+	end
+end
 
-res = [[.\res\]]
-blank = [[blank.png]]
+function initScript()
+	console.clear()
+	print("Script initialized.")
 
-memory.usememorydomain("WRAM")
+	res = [[.\res\]]
+	blank = [[blank.png]]
 
-menuWasOpened = false
+	memory.usememorydomain("WRAM")
 
-drawSpace = gui.createcanvas(256,224)
-drawSpace.Clear(0xff000000)
-client.SetClientExtraPadding(0,20,0,20)
+	menuWasOpened = false
+
+	drawSpace = gui.createcanvas(256,224)
+	drawSpace.Clear(0xff000000)
+	client.SetClientExtraPadding(0,20,0,20)
+end
 
 function drawArray(array)
 	w = 32
@@ -178,12 +188,23 @@ function updateItemGrid()
 	drawSpace.Refresh()
 end
 
-while true do
-	emu.frameadvance()
-	gui.text(0,1,warning)
+function mainLoop()
+	while true do
+		emu.frameadvance()
 
-	q = joypad.get(1)
-	if (q.Start == true) then
-		updateItemGrid()
+		q = joypad.get(1)
+		if (q.Start == true) then
+			updateItemGrid()
+		end
 	end
+end
+
+if not race() then
+	initScript()
+	mainLoop()
+else
+	print("")
+	print("Detected a race rom.") 
+	print("Auto-huds like this one are disallowed during races.")
+	print("Did you create a race rom by mistake?")
 end
