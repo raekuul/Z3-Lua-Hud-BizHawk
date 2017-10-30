@@ -28,7 +28,7 @@ function initScript()
 	console.clear()
 	print("Script initialized.")
 
-	res = [[.\res\]]
+	res = [[.\images\res\]]
 	blank = [[blank.png]]
 
 	memory.usememorydomain("WRAM")
@@ -97,7 +97,7 @@ end
 function updateQuiver()
 	q = memory.read_u8(quiver.address)
 	r = q + 30
-	path = [[.\quiver\]] .. r .. [[.png]]
+	path = [[.\images\quiver\]] .. r .. [[.png]]
 	drawSpace.DrawImage(path,32*quiver.col,32*quiver.row)
 end
 
@@ -106,7 +106,7 @@ function updateBottles()
 	paths = { }
 	for r=0,3,1 do
 		q[r] = memory.read_u8(0xf35c + r)
-		paths[r] = [[.\bottles\]] .. q[r] .. [[.png]]
+		paths[r] = [[.\images\bottles\]] .. q[r] .. [[.png]]
 		drawSpace.DrawImage(paths[r],32*r,32*bottle.row)
 	end
 end
@@ -114,7 +114,7 @@ end
 function updateBombBag()
 	q = memory.read_u8(bomb_bag.address)
 	r = q + 10
-	path = [[.\bomb_bag\]] .. r .. [[.png]]
+	path = [[.\images\bomb_bag\]] .. r .. [[.png]]
 	drawSpace.DrawImage(path,32*bomb_bag.col,32*bomb_bag.row)
 end
 
@@ -124,26 +124,26 @@ function updateLWBs()
 		j = boss_root_addr + (lwbosses.offsets[i] * 2)
 		p.values[i] = bit.check(memory.read_u8(j),boss_checkBit)
 		if p.values[i] == false then
-			drawSpace.DrawImage([[.\bosses\alive\]] .. lwbosses.img[i] .. ".png",32*lwbosses.col,32*(lwbosses.row + i))
+			drawSpace.DrawImage([[.\images\bosses\alive\]] .. lwbosses.img[i] .. ".png",32*lwbosses.col,32*(lwbosses.row + i))
 		else
-			drawSpace.DrawImage([[.\bosses\dead\]] .. lwbosses.img[i] .. ".png",32*lwbosses.col,32*(lwbosses.row + i))
+			drawSpace.DrawImage([[.\images\bosses\dead\]] .. lwbosses.img[i] .. ".png",32*lwbosses.col,32*(lwbosses.row + i))
 		end
 		
 		if (active_mode == "keysanity") then
 			q = memory.read_u8(keys[lwbosses.keyDex[i]])
-			drawSpace.DrawImage([[.\hud\]] .. q ..".png",32*lwbosses.col+16,32*(lwbosses.row + i)+16)
+			drawSpace.DrawImage([[.\images\hud\]] .. q ..".png",32*lwbosses.col+16,32*(lwbosses.row + i)+16)
 		elseif (active_mode == "dungeonItems") then
 			bk = bit.check(memory.read_u8(di_root_addr + lwbosses.compassByte[i]+2),lwbosses.compassBit[i])
 			dm = bit.check(memory.read_u8(di_root_addr + lwbosses.compassByte[i]+4),lwbosses.compassBit[i])
 			dc = bit.check(memory.read_u8(di_root_addr + lwbosses.compassByte[i]),lwbosses.compassBit[i])
 			if (dm == true) then
-				drawSpace.DrawImage([[.\hud\dm.png]],32*lwbosses.col+0,32*(lwbosses.row + i)+16)
+				drawSpace.DrawImage([[.\images\hud\dm.png]],32*lwbosses.col+0,32*(lwbosses.row + i)+16)
 			end
 			if (dc == true) then
-				drawSpace.DrawImage([[.\hud\dc.png]],32*lwbosses.col+8,32*(lwbosses.row + i)+16)
+				drawSpace.DrawImage([[.\images\hud\dc.png]],32*lwbosses.col+8,32*(lwbosses.row + i)+16)
 			end
 			if (bk == true) then
-				drawSpace.DrawImage([[.\hud\bk.png]],32*lwbosses.col+16,32*(lwbosses.row + i)+16)
+				drawSpace.DrawImage([[.\images\hud\bk.png]],32*lwbosses.col+16,32*(lwbosses.row + i)+16)
 			end
 		end
 	end
@@ -156,26 +156,26 @@ function updateDWBs()
 		p.values[i] = bit.check(memory.read_u8(j),boss_checkBit)
 		q = memory.read_u8(keys[dwbosses.keyDex[i]])
 		if p.values[i] == false then
-			drawSpace.DrawImage([[.\bosses\alive\]] .. dwbosses.img[i] .. ".png",32*dwbosses.col,32*(dwbosses.row+i))
+			drawSpace.DrawImage([[.\images\bosses\alive\]] .. dwbosses.img[i] .. ".png",32*dwbosses.col,32*(dwbosses.row+i))
 		else
-			drawSpace.DrawImage([[.\bosses\dead\]] .. dwbosses.img[i] .. ".png",32*dwbosses.col,32*(dwbosses.row+i))
+			drawSpace.DrawImage([[.\images\bosses\dead\]] .. dwbosses.img[i] .. ".png",32*dwbosses.col,32*(dwbosses.row+i))
 		end
 		
 		if (active_mode == "keysanity") then
 			q = memory.read_u8(keys[dwbosses.keyDex[i]])
-			drawSpace.DrawImage([[.\hud\]] .. q ..".png",32*dwbosses.col+16,32*(dwbosses.row + i)+16)
+			drawSpace.DrawImage([[.\images\hud\]] .. q ..".png",32*dwbosses.col+16,32*(dwbosses.row + i)+16)
 		elseif (active_mode == "dungeonItems") then
 			bk = bit.check(memory.read_u8(di_root_addr + dwbosses.compassByte[i]+2),dwbosses.compassBit[i])
 			dm = bit.check(memory.read_u8(di_root_addr + dwbosses.compassByte[i]+4),dwbosses.compassBit[i])
 			dc = bit.check(memory.read_u8(di_root_addr + dwbosses.compassByte[i]),dwbosses.compassBit[i])
 			if (dm == true) then
-				drawSpace.DrawImage([[.\hud\dm.png]],32*dwbosses.col+0,32*(dwbosses.row + i)+16)
+				drawSpace.DrawImage([[.\images\hud\dm.png]],32*dwbosses.col+0,32*(dwbosses.row + i)+16)
 			end
 			if (dc == true) then
-				drawSpace.DrawImage([[.\hud\dc.png]],32*dwbosses.col+8,32*(dwbosses.row + i)+16)
+				drawSpace.DrawImage([[.\images\hud\dc.png]],32*dwbosses.col+8,32*(dwbosses.row + i)+16)
 			end
 			if (bk == true) then
-				drawSpace.DrawImage([[.\hud\bk.png]],32*dwbosses.col+16,32*(dwbosses.row + i)+16)
+				drawSpace.DrawImage([[.\images\hud\bk.png]],32*dwbosses.col+16,32*(dwbosses.row + i)+16)
 			end
 		end
 	end
@@ -193,33 +193,33 @@ function updateAgaState()
 	
 	if bit.check(aga1,3) == true then
 		if bit.check(aga2,3) == true then
-			drawSpace.DrawImage([[.\bosses\Aga3.png]], 32*aga_state.col, 32*aga_state.row)
+			drawSpace.DrawImage([[.\images\bosses\Aga3.png]], 32*aga_state.col, 32*aga_state.row)
 		else
-			drawSpace.DrawImage([[.\bosses\Aga1.png]], 32*aga_state.col, 32*aga_state.row)
+			drawSpace.DrawImage([[.\images\bosses\Aga1.png]], 32*aga_state.col, 32*aga_state.row)
 		end
 	else
 		if bit.check(aga2,3) == true then
-			drawSpace.DrawImage([[.\bosses\Aga2.png]], 32*aga_state.col, 32*aga_state.row)
+			drawSpace.DrawImage([[.\images\bosses\Aga2.png]], 32*aga_state.col, 32*aga_state.row)
 		else
-			drawSpace.DrawImage([[.\bosses\Aga0.png]], 32*aga_state.col, 32*aga_state.row)
+			drawSpace.DrawImage([[.\images\bosses\Aga0.png]], 32*aga_state.col, 32*aga_state.row)
 		end
 	end
 	
 	if (active_mode == "keysanity") then
-		drawSpace.DrawImage([[.\hud\]] .. q ..".png",32*aga_state.col,32*(aga_state.row))
-		drawSpace.DrawImage([[.\hud\]] .. r ..".png",32*aga_state.col+16,32*(aga_state.row)+16)
+		drawSpace.DrawImage([[.\images\hud\]] .. q ..".png",32*aga_state.col,32*(aga_state.row))
+		drawSpace.DrawImage([[.\images\hud\]] .. r ..".png",32*aga_state.col+16,32*(aga_state.row)+16)
 	elseif (active_mode == "dungeonItems") then
 		bk = bit.check(memory.read_u8(aga_compassByte+2),aga_compassBit)
 		dm = bit.check(memory.read_u8(aga_compassByte+4),aga_compassBit)
 		dc = bit.check(memory.read_u8(aga_compassByte+0),aga_compassBit)
 		if (dm == true) then
-			drawSpace.DrawImage([[.\hud\dm.png]],32*aga_state.col+0,32*(aga_state.row)+16)
+			drawSpace.DrawImage([[.\images\hud\dm.png]],32*aga_state.col+0,32*(aga_state.row)+16)
 		end
 		if (dc == true) then
-			drawSpace.DrawImage([[.\hud\dc.png]],32*aga_state.col+8,32*(aga_state.row)+16)
+			drawSpace.DrawImage([[.\images\hud\dc.png]],32*aga_state.col+8,32*(aga_state.row)+16)
 		end
 		if (bk == true) then
-			drawSpace.DrawImage([[.\hud\bk.png]],32*aga_state.col+16,32*(aga_state.row)+16)
+			drawSpace.DrawImage([[.\images\hud\bk.png]],32*aga_state.col+16,32*(aga_state.row)+16)
 		end
 	end
 end
@@ -228,12 +228,12 @@ function updateEscape()
 	q = memory.read_u8(keys[0]) + memory.read_u8(keys[1])
 	r = memory.read_u8(0xF3C6)
 	if bit.check(r,2) == true then
-		drawSpace.DrawImage([[.\bosses\Zelda.png]],(32*5),(32*3))
+		drawSpace.DrawImage([[.\images\bosses\Zelda.png]],(32*5),(32*3))
 	else
-		drawSpace.DrawImage([[.\bosses\Zelda_Grey.png]],(32*5),(32*3))
+		drawSpace.DrawImage([[.\images\bosses\Zelda_Grey.png]],(32*5),(32*3))
 	end
 	if mode == "keysanity" then
-		drawSpace.DrawImage([[.\hud\]] .. q ..".png",(32*5)+16,(32*3)+16)
+		drawSpace.DrawImage([[.\images\hud\]] .. q ..".png",(32*5)+16,(32*3)+16)
 	end
 end
 

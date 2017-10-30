@@ -3,7 +3,7 @@
 -- Addresses are from WRAM
 -- WRAM addresses start at System Bus 0x7F0000
 
-res = [[.\res\]]
+res = [[.\images\res\]]
 blank = [[blank.png]]
 
 heartPiece = {address=0xF36B, row=4, col=0, [0]=res .. "hp0.png", res .. "hp1.png", res .. "hp2.png", res .. "hp3.png"}
