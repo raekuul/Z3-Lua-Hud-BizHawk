@@ -2,6 +2,18 @@
 -- Version 2 "Lanmola"
 require 'Z3-Rando-Hud-Addresses'
 
+modes = {[0]="none","keysanity","dungeonItems"}
+active_mode = "none"
+
+function setMode(mode)
+	active_mode = mode
+end
+
+controls = forms.newform(160,144, "Zelda 3 Autohud Controls")
+dungeonItemsMode = forms.button(controls, "Dungeon Items", setMode("dungeonItems"), 5, 75)
+keysanityMode = forms.button(controls, "Key Counts", setMode("keysanity"), 5, 40)
+emptyMode = forms.button(controls, "Default", setMode("none"), 5, 5)
+
 function race()
 	q = memory.read_u8(0x00FFC3, "System Bus")
 	if (q == 0x54) then
@@ -24,6 +36,9 @@ function initScript()
 
 	drawSpace = gui.createcanvas(256,224)
 	drawSpace.Clear(0xff000000)
+	
+	console.log("Controls dialog has been assigned handle "..controls)
+	
 	client.SetClientExtraPadding(0,20,0,20)
 end
 
@@ -38,12 +53,10 @@ function drawArray(array)
 			column = 0
 			row = row + 1
 		end
-		q = memory.read_u8(array[k].address)
-		drawSpace.DrawImage(array[k][q],w*array[k].col,h*array[k].row)
-		--console.log(array[k][q] .. " at row ".. row .. " and col " .. column)
-		column = column + 1
-		end
-	--console.log("Yep.")
+	q = memory.read_u8(array[k].address)
+	drawSpace.DrawImage(array[k][q],w*array[k].col,h*array[k].row)
+	column = column + 1
+	end
 end
 
 function setMUFlag()
@@ -109,13 +122,29 @@ function updateLWBs()
 	for i=0,2,1 do
 		j = boss_root_addr + (lwbosses.offsets[i] * 2)
 		p.values[i] = bit.check(memory.read_u8(j),boss_checkBit)
-		q = memory.read_u8(keys[lwbosses.keyDex[i]])
 		if p.values[i] == false then
 			drawSpace.DrawImage([[.\bosses\alive\]] .. lwbosses.img[i] .. ".png",32*lwbosses.col,32*(lwbosses.row + i))
 		else
 			drawSpace.DrawImage([[.\bosses\dead\]] .. lwbosses.img[i] .. ".png",32*lwbosses.col,32*(lwbosses.row + i))
 		end
-		drawSpace.DrawImage([[.\hud\]] .. q ..".png",32*lwbosses.col+16,32*(lwbosses.row + i)+16)
+		
+		if (active_mode == "keysanity") then
+			q = memory.read_u8(keys[lwbosses.keyDex[i]])
+			drawSpace.DrawImage([[.\hud\]] .. q ..".png",32*lwbosses.col+16,32*(lwbosses.row + i)+16)
+		elseif (active_mode == "dungeonItems") then
+			bk = bit.check(memory.read_u8(di_root_addr + lwbosses.compassByte[i]+2),lwbosses.compassBit[i])
+			dm = bit.check(memory.read_u8(di_root_addr + lwbosses.compassByte[i]+4),lwbosses.compassBit[i])
+			dc = bit.check(memory.read_u8(di_root_addr + lwbosses.compassByte[i]),lwbosses.compassBit[i])
+			if (dm == true) then
+				drawSpace.DrawImage([[.\hud\dm.png]],32*lwbosses.col+0,32*(lwbosses.row + i)+16)
+			end
+			if (dc == true) then
+				drawSpace.DrawImage([[.\hud\dc.png]],32*lwbosses.col+8,32*(lwbosses.row + i)+16)
+			end
+			if (bk == true) then
+				drawSpace.DrawImage([[.\hud\bk.png]],32*lwbosses.col+16,32*(lwbosses.row + i)+16)
+			end
+		end
 	end
 end
 
@@ -130,7 +159,24 @@ function updateDWBs()
 		else
 			drawSpace.DrawImage([[.\bosses\dead\]] .. dwbosses.img[i] .. ".png",32*dwbosses.col,32*(dwbosses.row+i))
 		end
-		drawSpace.DrawImage([[.\hud\]] .. q ..".png",32*dwbosses.col+16,32*(dwbosses.row + i)+16)
+		
+		if (active_mode == "keysanity") then
+			q = memory.read_u8(keys[dwbosses.keyDex[i]])
+			drawSpace.DrawImage([[.\hud\]] .. q ..".png",32*dwbosses.col+16,32*(dwbosses.row + i)+16)
+		elseif (active_mode == "dungeonItems") then
+			bk = bit.check(memory.read_u8(di_root_addr + dwbosses.compassByte[i]+2),dwbosses.compassBit[i])
+			dm = bit.check(memory.read_u8(di_root_addr + dwbosses.compassByte[i]+4),dwbosses.compassBit[i])
+			dc = bit.check(memory.read_u8(di_root_addr + dwbosses.compassByte[i]),dwbosses.compassBit[i])
+			if (dm == true) then
+				drawSpace.DrawImage([[.\hud\dm.png]],32*dwbosses.col+0,32*(dwbosses.row + i)+16)
+			end
+			if (dc == true) then
+				drawSpace.DrawImage([[.\hud\dc.png]],32*dwbosses.col+8,32*(dwbosses.row + i)+16)
+			end
+			if (bk == true) then
+				drawSpace.DrawImage([[.\hud\bk.png]],32*dwbosses.col+16,32*(dwbosses.row + i)+16)
+			end
+		end
 	end
 end
 
@@ -140,6 +186,10 @@ function updateAgaState()
 	
 	q = memory.read_u8(keys[aga_state.keyDex[0]])
 	r = memory.read_u8(keys[aga_state.keyDex[1]])
+	
+	aga_compassByte = 0xf364
+	aga_compassBit = 2
+	
 	if bit.check(aga1,3) == true then
 		if bit.check(aga2,3) == true then
 			drawSpace.DrawImage([[.\bosses\Aga3.png]], 32*aga_state.col, 32*aga_state.row)
@@ -153,8 +203,24 @@ function updateAgaState()
 			drawSpace.DrawImage([[.\bosses\Aga0.png]], 32*aga_state.col, 32*aga_state.row)
 		end
 	end
-	drawSpace.DrawImage([[.\hud\]] .. q ..".png",32*aga_state.col,32*(aga_state.row))
-	drawSpace.DrawImage([[.\hud\]] .. r ..".png",(32*aga_state.col)+16,32*(aga_state.row)+16)
+	
+	if (active_mode == "keysanity") then
+		drawSpace.DrawImage([[.\hud\]] .. q ..".png",32*aga_state.col,32*(aga_state.row))
+		drawSpace.DrawImage([[.\hud\]] .. r ..".png",32*aga_state.col+16,32*(aga_state.row)+16)
+	elseif (active_mode == "dungeonItems") then
+		bk = bit.check(memory.read_u8(aga_compassByte+2),aga_compassBit)
+		dm = bit.check(memory.read_u8(aga_compassByte+4),aga_compassBit)
+		dc = bit.check(memory.read_u8(aga_compassByte+0),aga_compassBit)
+		if (dm == true) then
+			drawSpace.DrawImage([[.\hud\dm.png]],32*aga_state.col+0,32*(aga_state.row)+16)
+		end
+		if (dc == true) then
+			drawSpace.DrawImage([[.\hud\dc.png]],32*aga_state.col+8,32*(aga_state.row)+16)
+		end
+		if (bk == true) then
+			drawSpace.DrawImage([[.\hud\bk.png]],32*aga_state.col+16,32*(aga_state.row)+16)
+		end
+	end
 end
 
 function updateEscape()
@@ -165,7 +231,9 @@ function updateEscape()
 	else
 		drawSpace.DrawImage([[.\bosses\Zelda_Grey.png]],(32*5),(32*3))
 	end
-	drawSpace.DrawImage([[.\hud\]] .. q ..".png",(32*5)+16,(32*3)+16)
+	if mode == "keysanity" then
+		drawSpace.DrawImage([[.\hud\]] .. q ..".png",(32*5)+16,(32*3)+16)
+	end
 end
 
 function updateBosses()
@@ -199,7 +267,7 @@ function mainLoop()
 	end
 end
 
-if not race() then
+if not race() then	
 	initScript()
 	mainLoop()
 else

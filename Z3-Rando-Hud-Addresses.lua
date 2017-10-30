@@ -15,11 +15,13 @@ bottle = {address=0xF35C, row=6, col=0, [0] = res .. blank}
 pendants = {address=0xF374, row=0, col=5, poss={[0]=3,2,1,0,0,0,0,0}}
 crystals = {address=0xF37A, row=0, col=6, poss={[0]=6,1,5,7,2,4,3,0}}
 
-lwbosses = {offsets={[0]=0xC8,0x33,0x07}, row=4, col=5, poss={[0]=0,1,2}, img={[0]="EP","DP","ToH"}, keyDex={[0]=2,3,10}}
-dwbosses = {offsets={[0]=0x5A,0x06,0x29,0xAC,0xDE,0x90,0xA4}, row=0, col=7, poss={[0]=0,1,2,3,4,5,6}, img={[0]="PoD","SP","SW","TT","IP","MM","TR"}, keyDex={[0]=6,5,8,11,9,7,12}}
+lwbosses = {offsets={[0]=0xC8,0x33,0x07}, row=4, col=5, poss={[0]=0,1,2}, img={[0]="EP","DP","ToH"}, keyDex={[0]=2,3,10}, compassByte={[0]=1,1,0}, compassBit={[0]=5,4,5}}
+dwbosses = {offsets={[0]=0x5A,0x06,0x29,0xAC,0xDE,0x90,0xA4}, row=0, col=7, poss={[0]=0,1,2,3,4,5,6}, img={[0]="PoD","SP","SW","TT","IP","MM","TR"}, keyDex={[0]=6,5,8,11,9,7,12}, compassByte={[0]=1,1,0,0,0,1,0}, compassBit={[0]=1,2,7,4,6,0,3}}
 
 boss_root_addr = 0xF001
 boss_checkBit = 3
+
+di_root_addr = 0xF364
 
 aga_state = {address={[0]=0xf041, 0xf01b}, row=3, col=0, keyDex={[0]=4,13}}
 
