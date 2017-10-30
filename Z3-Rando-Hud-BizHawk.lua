@@ -7,12 +7,13 @@ active_mode = "none"
 
 function setMode(mode)
 	active_mode = mode
+	updateItemGrid()
 end
 
 controls = forms.newform(160,144, "Zelda 3 Autohud Controls")
-dungeonItemsMode = forms.button(controls, "Dungeon Items", setMode("dungeonItems"), 5, 75)
-keysanityMode = forms.button(controls, "Key Counts", setMode("keysanity"), 5, 40)
-emptyMode = forms.button(controls, "Default", setMode("none"), 5, 5)
+dungeonItemsMode = forms.button(controls, "Dungeon Items", function() setMode("dungeonItems") end, 5, 75)
+keysanityMode = forms.button(controls, "Key Counts", function() setMode("keysanity") end, 5, 40)
+emptyMode = forms.button(controls, "Default", function() setMode("none") end, 5, 5)
 
 function race()
 	q = memory.read_u8(0x00FFC3, "System Bus")
