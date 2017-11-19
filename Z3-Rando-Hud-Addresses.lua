@@ -1,5 +1,5 @@
 -- Z3-Rando-Hud-Addresses
--- Accurate as of vt26
+-- Accurate as of vt27
 -- Addresses are from WRAM
 -- WRAM addresses start at System Bus 0x7E0000
 

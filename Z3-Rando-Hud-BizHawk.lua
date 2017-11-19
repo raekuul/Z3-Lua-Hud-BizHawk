@@ -4,6 +4,7 @@ require 'Z3-Rando-Hud-Addresses'
 
 modes = {[0]="none","keysanity","dungeonItems"}
 active_mode = "none"
+game_clear = false
 
 function setMode(mode)
 	active_mode = mode
@@ -25,6 +26,8 @@ function race()
 end
 
 function initScript()
+	math.randomseed(os.time())
+
 	console.clear()
 	print("Script initialized.")
 
@@ -39,7 +42,6 @@ function initScript()
 	drawSpace.Clear(0xff000000)
 	
 	console.log("Controls dialog has been assigned handle "..controls)
-	math.randomseed(os.time())
 	client.SetClientExtraPadding(0,20,0,20)
 	client.displaymessages(true)
 end
@@ -263,7 +265,10 @@ function getCurrentRoomByID()
 	i = memory.read_u16_le(room_Index)
 	j = memory.read_u16_le(ow_loc_dex)
 	here = ""
-	if (f == 0xFFFF) then
+	if (j == 0x88) then
+		here = "VICTORY!"
+		game_clear = true		
+	elseif (f == 0xFFFF) then
 		here = getOverworldLocationByID(i, j)
 	else
 		here = getUnderworldLocationByID(i, j)
@@ -297,9 +302,16 @@ end
 function mainLoop()
 	while true do
 		emu.frameadvance()
-		
-		getCurrentRoomByID()
 		q = joypad.get(1)
+		
+		if game_clear == true then
+			gui.text(3,3,"You beat the game!")
+		elseif game_clear == false then
+			getCurrentRoomByID()
+		else
+			gui.text(3,3,"Boolean game_clear neither true nor false..?")
+		end
+		
 		if (q.Start == true) then
 			updateItemGrid()
 		end
