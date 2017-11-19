@@ -1,5 +1,5 @@
 -- Z3-Rando-Hud-BizHawk.lua - BizHawk Version
--- Version 2 "Lanmola"
+-- Version 3 "Moldorm"
 require 'Z3-Rando-Hud-Addresses'
 
 modes = {[0]="none","keysanity","dungeonItems"}
@@ -39,8 +39,9 @@ function initScript()
 	drawSpace.Clear(0xff000000)
 	
 	console.log("Controls dialog has been assigned handle "..controls)
-	
+	math.randomseed(os.time())
 	client.SetClientExtraPadding(0,20,0,20)
+	client.displaymessages(true)
 end
 
 function drawArray(array)
@@ -257,10 +258,47 @@ function updateItemGrid()
 	drawSpace.Refresh()
 end
 
+function getCurrentRoomByID()
+	f = memory.read_u16_le(OWUW_indic)
+	i = memory.read_u16_le(room_Index)
+	j = memory.read_u16_le(ow_loc_dex)
+	here = ""
+	if (f == 0xFFFF) then
+		here = getOverworldLocationByID(i, j)
+	else
+		here = getUnderworldLocationByID(i, j)
+	end
+	gui.text(3,3,here)
+end
+
+function getOverworldLocationByID(i, j)
+	if j > 0x81 then
+		return bizstring.hex(j) .. ": Overworld Location Not Yet Indexed"
+	else
+		return OverworldList[j]
+	end
+end
+
+function getUnderworldLocationByID(i, j)
+	lamp = memory.read_u8(0xF34A)
+	if i > 0x128 then
+		return bizstring.hex(i) .. ": Underworld Location Not Yet Indexed"
+	elseif lamp > 0 then
+		return UnderworldList[i].name
+	else
+		if UnderworldList[i].dark == false then
+			return UnderworldList[i].name
+		else
+			return "???"
+		end
+	end
+end
+
 function mainLoop()
 	while true do
 		emu.frameadvance()
-
+		
+		getCurrentRoomByID()
 		q = joypad.get(1)
 		if (q.Start == true) then
 			updateItemGrid()
