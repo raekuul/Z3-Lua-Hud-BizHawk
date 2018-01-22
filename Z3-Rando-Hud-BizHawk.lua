@@ -1,10 +1,21 @@
 -- Z3-Rando-Hud-BizHawk.lua - BizHawk Version
--- Version 3 "Moldorm"
+-- Version 4 "King Helmasaur"
 require 'Z3-Rando-Hud-Addresses'
 
 modes = {[0]="none","keysanity","dungeonItems"}
 active_mode = "none"
+seed = ""
 game_clear = false
+
+function readAsAscii(address, length, domain)
+	ret = ""
+	q = memory.readbyterange(address-1, length+1, domain)
+	for a,b in next,q do
+		ret = ret .. string.char(b)
+	end
+	ret = bizstring.substring(ret,0,length)
+	return ret
+end
 
 function setMode(mode)
 	active_mode = mode
@@ -17,10 +28,11 @@ keysanityMode = forms.button(controls, "Key Counts", function() setMode("keysani
 emptyMode = forms.button(controls, "Default", function() setMode("none") end, 5, 5)
 
 function race()
-	q = memory.read_u8(0x00FFC3, "System Bus")
-	if (q == 0x54) then
+	q = readAsAscii(0x00FFC3, 0x7, "System Bus")
+	if (q == "TOURNEY") then
 		return true
 	else
+		seed = readAsAscii(0x00FFC2, 0xA, "System Bus")
 		return false
 	end
 end
@@ -294,7 +306,7 @@ function getUnderworldLocationByID(i, j)
 		if UnderworldList[i].dark == false then
 			return UnderworldList[i].name
 		else
-			return "???"
+			return seed
 		end
 	end
 end

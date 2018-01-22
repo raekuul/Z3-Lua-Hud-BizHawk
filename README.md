@@ -1,9 +1,14 @@
 # Z3-Lua-Hud-BizHawk
 
 Designed for use with BizHawk
-Could possibly be adapted for use with Snes9x directly, but requires a canvas library for full implementation.
+Could possibly be adapted for use with Snes9x directly, but that will require Snes9x to have a master version with lua support.
 
-2017-11-19 - added Room and Zone Display
+2018-01-22:
+  New TOURNEY detection method.
+  Script now shows the Seed number during lampless dark rooms/the opening sequence
+  Special room names for boss arenas. Collect them all!
+  Snes9x port framework began
+  Removed Herobrine
 
 Known issues:  
 

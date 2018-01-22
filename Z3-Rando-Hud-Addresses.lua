@@ -3,8 +3,32 @@
 -- Addresses are from WRAM
 -- WRAM addresses start at System Bus 0x7E0000
 
+require 'aga2_epithets'
+
 res = [[.\images\res\]]
 blank = [[blank.png]]
+
+function aga2_anagram()
+	i = math.random(500)
+	return list_of_aga2_anagrams[i]
+end
+
+
+epithets = {
+	armos = "Palace Guardians - ARMOS KNIGHTS",
+	lanmo = "Desert Guardians - LANMOLAS",
+	moldo = "Tower Guardian - MOLDORM",
+	agah1 = "The Deceiver - AGAHNIM",
+	helma = "Masked Beast - KING HELMASAUR",
+	arrgh = "Swamp Colony - ARRGHUS",
+	mothu = "Forest Wraith - MOTHULA",
+	blind = "Unflinching Gaze - BLIND",
+	khold = "Entombed Demon - KHOLDSTARE",
+	vitre = "Miserable Pile - VITREOUS",
+	trine = "Polar Chimaera - TRINEXX",
+	agah2 = aga2_anagram() .. " - AGAHNIM.. ?",
+	ganon = "GANON"
+}
 
 heartPiece = {address=0xF36B, row=4, col=0, [0]=res .. "hp0.png", res .. "hp1.png", res .. "hp2.png", res .. "hp3.png"}
 
@@ -79,20 +103,20 @@ ItemsArray = {
 }
 
 UnderworldList = {
-[0]={name="GANON",dark=true},
+[0]={name=epithets.ganon,dark=true},
 	{name="Hyrule Castle 1F",dark=false},
 	{name="The Escape",dark=false},
 	{name="Houlihan Room",dark=false},
 	{name="Turtle Rock B1F",dark=false},
 	{name="Empty Clone Room",dark=false},
-	{name="Swamp Colony - ARRGHUS",dark=false},
-	{name="Tower Guardian - MOLDORM",dark=false},
+	{name=epithets.arrgh,dark=false},
+	{name=epithets.moldo,dark=false},
 	{name="River Fairy Fountain",dark=false},
 	{name="Palace of Darkness B1F",dark=false},
 	{name="Palace of Darkness B1F",dark=false},
 	{name="Palace of Darkness B1F",dark=true},
 	{name="Ganon's Tower 2F",dark=false},
-	{name="Ganon's Puppet - AGAHNIM",dark=false},
+	{name=epithets.agah2,dark=false},
 	{name="Ice Palace 1F",dark=false},
 	{name="Empty Clone Room",dark=false},
 	{name="The Hero's Downfall",dark=false},
@@ -111,7 +135,7 @@ UnderworldList = {
 	{name="Ganon's Tower 7F",dark=false},
 	{name="Ice Palace B1F",dark=false},
 	{name="Ice Palace B1F",dark=false},
-	{name="The Deceiver - AGAHNIM",dark=false},
+	{name=epithets.agah1,dark=false},
 	{name="The Escape",dark=true},
 	{name="The Escape",dark=true},
 	{name="Turtle Rock B1F (Assassin Eyes Entrance)",dark=false},
@@ -120,7 +144,7 @@ UnderworldList = {
 	{name="Swamp Palace B1F",dark=false},
 	{name="Tower of Hera 4F",dark=false},
 	{name="Swamp Palace 1F",dark=false},
-	{name="Forest Wraith - MOTHULA",dark=false},
+	{name=epithets.mothu,dark=false},
 	{name="Palace of Darkness 1F",dark=false},
 	{name="Palace of Darkness 1F",dark=false},
 	{name="Hookshot Cave (Back)",dark=false},
@@ -130,7 +154,7 @@ UnderworldList = {
 	{name="Agahnim's Tower 7F",dark=false},
 	{name="Tower of Hera 3F",dark=false},
 	{name="The Escape",dark=true},
-	{name="Desert Guardians - LANMOLAS",dark=false},
+	{name=epithets.lanmo,dark=false},
 	{name="Swamp Palace B1F",dark=false},
 	{name="Swamp Palace B1F",dark=false},
 	{name="Swamp Palace B1F",dark=false},
@@ -169,7 +193,7 @@ UnderworldList = {
 	{name="Skull Woods 1F",dark=false},
 	{name="Skull Woods 1F",dark=false},
 	{name="Skull Woods 1F",dark=false},
-	{name="Ganon's Pet - KING HELMASAUR",dark=false},
+	{name=epithets.helma,dark=false},
 	{name="Ganon's Tower 3F",dark=false},
 	{name="Ganon's Tower 3F",dark=false},
 	{name="Ganon's Tower 4F",dark=false},
@@ -223,7 +247,7 @@ UnderworldList = {
 	{name="Ganon's Tower 1F",dark=false},
 	{name="Ice Palace B4F",dark=false},
 	{name="Empty Clone Room",dark=false},
-	{name="Miserable Pile - VITREOUS",dark=false},
+	{name=epithets.vitre,dark=false},
 	{name="Misery Mire B2F",dark=false},
 	{name="Misery Mire B2F",dark=true},
 	{name="Misery Mire B2F",dark=true},
@@ -243,7 +267,7 @@ UnderworldList = {
 	{name="Misery Mire B1F",dark=false},
 	{name="Misery Mire B1F",dark=false},
 	{name="Misery Mire B1F",dark=false},
-	{name="Polar Chimaera - TRINEXX",dark=false},
+	{name=epithets.trine,dark=false},
 	{name="Ganon's Tower 5F",dark=false},
 	{name="Ganon's Tower 5F",dark=false},
 	{name="Tower of Hera 1F",dark=false},
@@ -251,7 +275,7 @@ UnderworldList = {
 	{name="Eastern Palace 1F",dark=false},
 	{name="Eastern Palace 1F",dark=false},
 	{name="Thieves' Town B1F",dark=false},
-	{name="Unflinching Gaze - BLIND",dark=false},
+	{name=epithets.blind,dark=false},
 	{name="Empty Clone Room",dark=false},
 	{name="Ice Palace B5F",dark=false},
 	{name="Ice Palace B5F",dark=false},
@@ -279,7 +303,7 @@ UnderworldList = {
 	{name="Turtle Rock B2F",dark=false},
 	{name="Turtle Rock 1F",dark=false},
 	{name="Turtle Rock 1F",dark=false},
-	{name="Palace Guardians - ARMOS KNIGHTS",dark=false},
+	{name=epithets.armos,dark=false},
 	{name="Eastern Palace 1F",dark=false},
 	{name="Nearly Empty Clone Room",dark=false},
 	{name="Thieves' Town B1F",dark=false},
@@ -301,7 +325,7 @@ UnderworldList = {
 	{name="Thieves' Town B1F",dark=false},
 	{name="Thieves' Town B1F",dark=false},
 	{name="Empty Clone Room",dark=false},
-	{name="Entombed Demon - KHOLDSTARE",dark=false},
+	{name=epithets.khold,dark=false},
 	{name="Paradox Cave 3F",dark=false},
 	{name="Agahnim's Tower 2F",dark=false},
 	{name="Forest Thieves' Hideout",dark=false},
