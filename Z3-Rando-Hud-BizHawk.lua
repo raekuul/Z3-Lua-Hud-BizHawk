@@ -9,12 +9,11 @@ game_clear = false
 
 function readAsAscii(address, length, domain)
 	ret = ""
-	q = memory.readbyterange(address-1, length+1, domain)
-	for a,b in next,q do
-		ret = ret .. string.char(b)
+	q = memory.readbyterange(address, length, domain)
+	for i=0,length-1 do
+	  ret = ret .. string.char(q[i])
 	end
-	ret = bizstring.substring(ret,0,length)
-	return ret
+	return ret	
 end
 
 function setMode(mode)
